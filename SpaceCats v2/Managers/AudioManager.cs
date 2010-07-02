@@ -222,10 +222,10 @@ namespace SpaceCats_v2
 
         public void LoadContent()
         {
-            z_theme = z_game.Content.Load<Song>("Audio\\Music\\AdventuresofCaptainSquiggles");
-            z_mission1 = z_game.Content.Load<Song>("Audio\\Music\\ATreeFalls");
-            z_mission2 = z_game.Content.Load<Song>("Audio\\Music\\OutsideMyComfortZone");
-            z_boss = z_game.Content.Load<Song>("Audio\\Music\\Mark Oleson - Peril Probability Prime WIP 1");
+            z_theme = z_game.Content.Load<Song>("Audio\\Music\\ateam");
+            //z_mission1 = z_game.Content.Load<Song>("Audio\\Music\\ATreeFalls");
+            //z_mission2 = z_game.Content.Load<Song>("Audio\\Music\\OutsideMyComfortZone");
+            //z_boss = z_game.Content.Load<Song>("Audio\\Music\\Mark Oleson - Peril Probability Prime WIP 1");
         }
 
     }
