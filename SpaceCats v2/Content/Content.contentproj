@@ -38,38 +38,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Audio\Music\AdventuresofCaptainSquiggles.mp3">
-      <Name>AdventuresofCaptainSquiggles</Name>
-      <Importer>Mp3Importer</Importer>
-      <Processor>SongProcessor</Processor>
-    </Compile>
-    <Compile Include="Audio\Music\ATreeFalls.mp3">
-      <Name>ATreeFalls</Name>
-      <Importer>Mp3Importer</Importer>
-      <Processor>SongProcessor</Processor>
-    </Compile>
     <Compile Include="Audio\Music\Beautiful_Darkness.mp3">
       <Name>Beautiful_Darkness</Name>
-      <Importer>Mp3Importer</Importer>
-      <Processor>SongProcessor</Processor>
-    </Compile>
-    <Compile Include="Audio\Music\Mark Oleson - All Good Things WIP1.mp3">
-      <Name>Mark Oleson - All Good Things WIP1</Name>
-      <Importer>Mp3Importer</Importer>
-      <Processor>SongProcessor</Processor>
-    </Compile>
-    <Compile Include="Audio\Music\Mark Oleson - credits demo.mp3">
-      <Name>Mark Oleson - credits demo</Name>
-      <Importer>Mp3Importer</Importer>
-      <Processor>SongProcessor</Processor>
-    </Compile>
-    <Compile Include="Audio\Music\Mark Oleson - Peril Probability Prime WIP 1.mp3">
-      <Name>Mark Oleson - Peril Probability Prime WIP 1</Name>
-      <Importer>Mp3Importer</Importer>
-      <Processor>SongProcessor</Processor>
-    </Compile>
-    <Compile Include="Audio\Music\OutsideMyComfortZone.mp3">
-      <Name>OutsideMyComfortZone</Name>
       <Importer>Mp3Importer</Importer>
       <Processor>SongProcessor</Processor>
     </Compile>
@@ -442,6 +412,13 @@
       <Name>Store_Image</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Audio\Music\ateam.mp3">
+      <Name>ateam</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SongProcessor</Processor>
     </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\$(XnaFrameworkVersion)\Microsoft.Xna.GameStudio.ContentPipeline.targets" />
