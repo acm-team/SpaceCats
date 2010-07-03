@@ -92,6 +92,7 @@
     <Compile Include="Managers\MenuManager.cs" />
     <Compile Include="Managers\MissionManager.cs" />
     <Compile Include="Managers\PlayerManager.cs" />
+    <Compile Include="Managers\Stage.cs" />
     <Compile Include="Managers\StageManager.cs" />
     <Compile Include="Menus\MainMenu.cs" />
     <Compile Include="Menus\Menu.cs" />

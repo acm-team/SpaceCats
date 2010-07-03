@@ -27,18 +27,6 @@ namespace SpaceCats_v2
         }
     }
 
-    public static class LayerConstants
-    {
-        public const float DialogLayer = 0.0f;
-        public const float MenuLayer = 0.0f;
-        public const float AchievementLayer = 0.0f;
-        public const float ScoreLayer = 1.0f;
-        public const float FloatingTextLayer = 2.0f;
-        public const float ExplodLayer = 3.0f;
-        public const float ObjectLayer = 4.0f;
-        public const float BackgroundLayer = 5.0f;
-    }
-    
     public class GameObject
     {
         //*******************************
