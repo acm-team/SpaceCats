@@ -22,8 +22,8 @@ namespace SpaceCats_v2
         private List<MenuObject> z_objects;
         private MenuObject z_selected;
         private string z_tag;
-        private bool z_isActive;
-        private bool z_isTransitioning;
+        private bool z_active;
+        private bool z_transitioning;
 
         //********************************************
         // Public Properties
@@ -52,13 +52,13 @@ namespace SpaceCats_v2
         { get { return z_game; } }
         public bool isActive
         {
-            get { return z_isActive; }
-            set { z_isActive = value; }
+            get { return z_active; }
+            set { z_active = value; }
         }
         public bool isTransitioning
         {
-            get { return z_isTransitioning; }
-            set { z_isTransitioning = value; }
+            get { return z_transitioning; }
+            set { z_transitioning = value; }
         }
 
         //********************************************
