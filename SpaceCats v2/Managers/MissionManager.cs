@@ -68,20 +68,20 @@ namespace SpaceCats_v2
             switch (mission)
             {
                 case 1:
-                    z_game.AudioManager.Play(SongList.Mission1);
+                    //z_game.AudioManager.Play(SongList.Mission1);
                     z_game.StageManager.AddObject(new StarField(z_game));
                     break;
                 case 2:
-                    z_game.AudioManager.Play(SongList.Mission2);
+                    //z_game.AudioManager.Play(SongList.Mission2);
                     break;
                 case 3:
-                    z_game.AudioManager.Play(SongList.Mission3);
+                    //z_game.AudioManager.Play(SongList.Mission3);
                     break;
                 case 4:
-                    z_game.AudioManager.Play(SongList.Mission4);
+                    //z_game.AudioManager.Play(SongList.Mission4);
                     break;
                 case 5:
-                    z_game.AudioManager.Play(SongList.Mission5);
+                    //z_game.AudioManager.Play(SongList.Mission5);
                     break;
                 default:
                     break;
