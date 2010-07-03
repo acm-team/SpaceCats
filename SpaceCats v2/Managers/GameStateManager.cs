@@ -55,9 +55,17 @@ namespace SpaceCats_v2
         {
             if (z_game.InputManager.IsKeyDown(Keys.LeftControl))
             {
-                if (z_game.InputManager.KeyPressed(Keys.D1) && z_game.ViewPort.Width != 1280)
+                if (z_game.InputManager.KeyPressed(Keys.D1) && z_game.ViewPort.Height != 720)
                 {
                     z_game.ViewPort = new Rectangle(0, 0, 1280, 720);
+                }
+                else if (z_game.InputManager.KeyPressed(Keys.D2) && z_game.ViewPort.Width != 1024)
+                {
+                    z_game.ViewPort = new Rectangle(0, 0, 1024, 768);
+                }
+                else if (z_game.InputManager.KeyPressed(Keys.D3) && z_game.ViewPort.Height != 960)
+                {
+                    z_game.ViewPort = new Rectangle(0, 0, 1280, 960);
                 }
                 else if (z_game.InputManager.KeyPressed(Keys.D8) && z_game.ViewPort.Width != 800)
                 {
