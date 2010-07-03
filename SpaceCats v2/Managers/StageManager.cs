@@ -45,6 +45,9 @@ namespace SpaceCats_v2
                 z_objects[i].Update(gametime);
                 if (z_objects[i].RemoveMe)
                 {
+                    // if the object came from a pool, return it to its pool
+                    if (z_objects[i] is IPoolableGameObject)
+                        ((IPoolableGameObject)z_objects[i]).ReturnToPool();
                     // remove the object from the list and decrement the index
                     z_objects.RemoveAt(i--);
                 }
@@ -70,6 +73,12 @@ namespace SpaceCats_v2
                     break;
             }
             z_objects.Insert(i, obj);
+        }
+
+        // remove an object from the main object list
+        public void RemoveObject(GameObject obj)
+        {
+            z_objects.Remove(obj);
         }
 
         public void Reset()

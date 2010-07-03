@@ -47,10 +47,6 @@ namespace SpaceCats_v2
         private PlayerShip z_player1;
 
         //*********************************************
-        // Private Fields
-        //*********************************************
-
-        //*********************************************
         // Public properties
         //*********************************************
         public Rectangle ViewPort
@@ -225,6 +221,12 @@ namespace SpaceCats_v2
             z_spriteBatch.End();
             
             base.Draw(gameTime);
+        }
+
+        public void StartNewGame()
+        {
+            z_player1.Reset();
+            // if/when we support multiple players, reset those players here as well.
         }
 
         public Rectangle WorldToScreen(Rectangle r)

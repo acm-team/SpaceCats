@@ -71,6 +71,9 @@ namespace SpaceCats_v2
             Hits = 0;
             Position = new Vector2(640, 650);
             SpriteOrientation = 3f * MathHelper.PiOver2;
+            Layer = LayerConstants.ObjectLayer;
+            Direction = -Vector2.UnitY;
+            DrawRotation = VectorHelper.VectorToAngle(Direction);
         }
 
         //**************************
@@ -89,13 +92,15 @@ namespace SpaceCats_v2
         public override void Reset()
         {
             base.Reset();
-            Health = 0;
+            Health = 100;
             Lives = 3;
             Score = 0;
             ShotsTaken = 0;
             Hits = 0;
             Position = new Vector2(640, 650);
-            Velocity = Vector2.Zero;
+            Direction = -Vector2.UnitY;
+            DrawRotation = VectorHelper.VectorToAngle(Direction);
+            Speed = 0;
         }
     }
 }

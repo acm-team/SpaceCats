@@ -132,8 +132,10 @@ namespace SpaceCats_v2
                     }
                     else if (commandWords[0].CompareTo("StartMission") == 0)
                     {
-                        z_game.MissionManager.LoadMission(Int32.Parse(commandWords[1]));
-
+                        z_game.StartNewGame();
+                        HideNow();
+                        z_game.MissionManager.StartMission(Int32.Parse(commandWords[1]));
+                        z_game.GameStateManager.GameState = GameState.GamePlaying;
                     }
                     else
                     {
@@ -160,7 +162,7 @@ namespace SpaceCats_v2
                 if (z_bgPlayer2.Parent == null)
                 {
                     z_bgPlayer.AddChild(z_bgPlayer2);
-                    z_bgPlayer2.Speed = 100f/1000f;
+                    z_bgPlayer2.AccelerateTo(250f / 1000f, 5000);
                 }
             }
             theta2 = z_bgPlayer2.Speed * gameTime.ElapsedGameTime.Milliseconds / orbitRadius2;
@@ -175,10 +177,9 @@ namespace SpaceCats_v2
 
         public void Show()
         {
-            // clear the stage
-            // z_game.StageManager.Reset();
             // start the correct song playing
             z_game.AudioManager.Play(SongList.Theme);
+
             // add all the menu objects into the stage
             foreach (GameObject obj in z_objects)
                 z_game.StageManager.AddObject(obj);
@@ -190,6 +191,21 @@ namespace SpaceCats_v2
         public void Hide()
         {
             z_isShowing = false;
+            foreach (GameObject obj in z_objects)
+            {
+                z_game.StageManager.RemoveObject(obj);
+            }
+        }
+
+        public void HideNow()
+        {
+            z_isShowing = false;
+            foreach (GameObject obj in z_objects)
+            {
+                if (obj is MenuObject)
+                    ((MenuObject)obj).HideNow();
+                z_game.StageManager.RemoveObject(obj);
+            }
         }
 
         public void Reset()
@@ -209,11 +225,11 @@ namespace SpaceCats_v2
             z_bgPlayer = new PlayerShip(z_game);
             z_bgPlayer.Position = new Vector2(0, 360);
             z_bgPlayer.Direction = Vector2.UnitX;
-            z_bgPlayer.Speed = 500f / 1000f;
+            z_bgPlayer.Speed = 150f / 1000f;
             z_bgPlayer2 = new PlayerShip(z_game);
             z_bgPlayer2.Position = new Vector2(1280, 640);
             z_bgPlayer2.Direction = -Vector2.UnitX;
-            z_bgPlayer2.Speed = 300f / 1000f;
+            z_bgPlayer2.Speed = 500f / 1000f;
             z_bgPlayer2.MaxTurnRate = MathHelper.Pi / 1f;
 
             // add it to the object list

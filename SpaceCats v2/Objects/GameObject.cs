@@ -49,6 +49,8 @@ namespace SpaceCats_v2
         private Vector2 z_position, z_direction;
         private float z_layer;
         private float z_speed, z_maxSpeed;
+        private float z_acceleration;
+        private float z_accelerateTo;
         private Texture2D z_sprite;
         private List<Rectangle> z_spriteRects;
         private int z_firstFrameToDraw, z_lastFrameToDraw, z_currentFrame;
@@ -385,7 +387,7 @@ namespace SpaceCats_v2
             z_spriteAlpha = 100.0f;
             z_visible = true;
             z_drawRotation = 0.0f;
-            z_maxTurnRate = MathHelper.Pi / 750f;
+            z_maxTurnRate = MathHelper.Pi / 3000f;
             z_children = new List<GameObject>();
         }
 
@@ -394,6 +396,17 @@ namespace SpaceCats_v2
         //********************************
         public virtual void Update(GameTime gameTime)
         {
+            // modify speed with acceleration
+            if (z_acceleration != 0f)
+            {
+                if (Math.Abs(z_speed - z_accelerateTo) <= Math.Abs(z_acceleration * gameTime.ElapsedGameTime.Milliseconds))
+                {
+                    z_speed = z_accelerateTo;
+                    z_acceleration = 0f;
+                }
+                else
+                    z_speed += z_acceleration * gameTime.ElapsedGameTime.Milliseconds;
+            }
             // apply velocity to position
             Position += Velocity * gameTime.ElapsedGameTime.Milliseconds;
             foreach (GameObject child in z_children)
@@ -427,6 +440,7 @@ namespace SpaceCats_v2
         {
             float curDirection = VectorHelper.VectorToAngle(Direction);
             float multiplier = 1.0f;
+           
             newDirection %= MathHelper.TwoPi; 
 
             // if the difference in direction is less than the max turn rate, jump to new direction
@@ -461,11 +475,21 @@ namespace SpaceCats_v2
             z_children.Add(child);
         }
 
+        public void AccelerateTo(float newSpeed, float accelTime)
+        {
+            z_accelerateTo = newSpeed;
+            if (accelTime == 0f)
+                z_acceleration = (newSpeed - z_speed) / 1000f;
+            else
+                z_acceleration = (newSpeed - z_speed) / accelTime;
+        }
+
         public virtual void Reset()
         {
             z_animationTimer = 0;
-            z_position = z_moveTo = z_direction = Vector2.Zero;
-            z_speed = 0.0f;
+            z_position = z_moveTo = Vector2.Zero;
+            z_direction = Vector2.UnitX;
+            z_accelerateTo = z_acceleration = z_speed = 0.0f;
             z_removeMe = false;
             z_visible = true;
             z_drawRotation = 0;
