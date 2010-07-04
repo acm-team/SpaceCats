@@ -18,8 +18,10 @@ namespace SpaceCats_v2
         //********************************************
         // Fields
         //********************************************
-        private List<GameObject> z_objects;
+        private Stage z_stage;
         private Main z_game;
+        private bool z_isUpdating;
+        private Stack<GameObject> z_adds, z_removes;
 
         //********************************************
         // Public Properties
@@ -31,7 +33,10 @@ namespace SpaceCats_v2
         public StageManager(Main game)
         {
             z_game = game;
-            z_objects = new List<GameObject>();
+            z_stage = new Stage();
+            z_isUpdating = false;
+            z_adds = new Stack<GameObject>(5);
+            z_removes = new Stack<GameObject>(10);
         }
 
         //********************************************
@@ -39,51 +44,67 @@ namespace SpaceCats_v2
         //********************************************
         public void Update(GameTime gametime)
         {
-            int i;
-            for (i = 0; i < z_objects.Count; i++)
+            z_isUpdating = true;
+
+            // update all items on the stage
+            foreach (GameObject obj in z_stage)
             {
-                z_objects[i].Update(gametime);
-                if (z_objects[i].RemoveMe)
-                {
-                    // if the object came from a pool, return it to its pool
-                    if (z_objects[i] is IPoolableGameObject)
-                        ((IPoolableGameObject)z_objects[i]).ReturnToPool();
-                    // remove the object from the list and decrement the index
-                    z_objects.RemoveAt(i--);
-                }
+                obj.Update(gametime);
+                if (obj.RemoveMe)
+                    z_removes.Push(obj);
             }
+
+            // remove any that were flagged for removal
+            while(z_removes.Count>0)
+            {
+                // if the object came from a pool, return it to its pool
+                if (z_removes.Peek() is IPoolableGameObject)
+                    ((IPoolableGameObject)z_removes.Peek()).ReturnToPool();
+                // remove the object from the stage
+                z_stage.Remove(z_removes.Pop());
+            }
+
+            // add any objects that were added while updating
+            while(z_adds.Count>0)
+            {
+                z_stage.Add(z_adds.Pop());
+            }
+
+            z_isUpdating = false;
         }
 
         public void Draw(GameTime gametime)
         {
-            int i;
-            // draw the objects from back to front;
-            for (i = z_objects.Count - 1; i >= 0; i--)
-                z_objects[i].Draw(gametime);
+            // draw the objects on the stage
+            foreach (GameObject obj in z_stage)
+                obj.Draw(gametime);
         }
 
         // Insert a new object into the main object list at the correct position based on layer
         public void AddObject(GameObject obj)
         {
-            int i;
-            // objects get inserted into the foreground of the layer specified
-            for (i = 0; i < z_objects.Count; i++)
-            {
-                if (obj.Layer <= z_objects[i].Layer)
-                    break;
-            }
-            z_objects.Insert(i, obj);
+            // if we are in the update loop, we cannot modify the stage structure,
+            // as it would invalidate the enumerator
+            if (z_isUpdating)
+                z_adds.Push(obj);
+            else
+                z_stage.Add(obj);
         }
 
         // remove an object from the main object list
         public void RemoveObject(GameObject obj)
         {
-            z_objects.Remove(obj);
+            // if we are in the update loop, we cannot modify the stage structure,
+            // as it would invalidate the enumerator
+            if (z_isUpdating)
+                z_removes.Push(obj);
+            else
+                z_stage.Remove(obj);
         }
 
         public void Reset()
         {
-            z_objects.Clear();
+            z_stage.Clear();
         }
 
         public void LoadContent()

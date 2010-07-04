@@ -231,6 +231,7 @@ namespace SpaceCats_v2
             z_bgPlayer2.Direction = -Vector2.UnitX;
             z_bgPlayer2.Speed = 500f / 1000f;
             z_bgPlayer2.MaxTurnRate = MathHelper.Pi / 1f;
+            z_bgPlayer2.Layer += 0.5f;
 
             // add it to the object list
             z_objects.Add(z_starField);
