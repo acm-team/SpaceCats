@@ -24,7 +24,6 @@ namespace SpaceCats_v2
         public const float DialogLayer = 6.0f;
         public const float MenuLayer = 7.0f;
         public const int NumLayers = 8;
-        public const String Jesse = "a massive homo";
     }
 
     public class Layer
