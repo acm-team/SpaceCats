@@ -34,6 +34,7 @@ namespace SpaceCats_v2
         //*******************************
         private Main z_game;
         private int z_id;
+        protected int z_typeID;
         private Vector2 z_position, z_direction;
         private float z_layer;
         private float z_speed, z_maxSpeed;
@@ -59,6 +60,11 @@ namespace SpaceCats_v2
         //*******************************
         // Public Properties
         //*******************************
+        public const int ObjectTypeID = 1;
+        virtual public int TypeID
+        {
+            get { return z_typeID; }
+        }
         public Main TheGame
         {
             get { return z_game; }
@@ -284,6 +290,7 @@ namespace SpaceCats_v2
         public List<Rectangle> SpriteRects
         {
             get { return z_spriteRects; }
+            set { z_spriteRects = value; }
         }
 
         // these define the range of cels to use for drawing an animation
@@ -359,10 +366,10 @@ namespace SpaceCats_v2
 
         public GameObject(Main game, Texture2D sprite)
         {
+            z_typeID = GameObject.ObjectTypeID;
             z_game = game;
             z_spriteRects = new List<Rectangle>();
             // the spriteRect array will likely be maintained as a static variable by derived classes to save memory.
-            
             Sprite = sprite; // this automatically sets all sprite related parameters, such as width, center, scale, etc
 
             z_animationDelay = 100;
@@ -379,7 +386,48 @@ namespace SpaceCats_v2
             z_children = new List<GameObject>();
         }
 
-        //********************************
+        // Create a new GameObject with the exact same values as the original
+        // It copies the references for the sprite and sprite rect arrays,
+        // but does not copy child lists. This MUST be implemented by classes 
+        // utilizing Pool<T>, as it is used to create the copies for the pool.
+        public GameObject(GameObject obj)
+        {
+            z_typeID = GameObject.ObjectTypeID;
+            z_game = obj.z_game;
+            z_position = obj.z_position;
+            z_direction = obj.z_direction;
+            z_layer = obj.z_layer;
+            z_speed = obj.z_speed;
+            z_maxSpeed = obj.z_maxSpeed;
+            z_acceleration = obj.z_acceleration;
+            z_accelerateTo = obj.z_accelerateTo;
+            z_sprite = obj.z_sprite;
+            z_spriteRects = obj.z_spriteRects;
+            z_firstFrameToDraw = obj.z_firstFrameToDraw;
+            z_lastFrameToDraw = obj.z_lastFrameToDraw;
+            z_currentFrame = obj.z_currentFrame;
+            z_animationTimer = obj.z_animationTimer;
+            z_animationDelay = obj.z_animationDelay;
+            z_visible = obj.z_visible;
+            z_width = obj.z_width;
+            z_height = obj.z_height;
+            z_scaleX = obj.z_scaleX;
+            z_scaleY = obj.z_scaleY;
+            z_drawRotation = obj.z_drawRotation;
+            z_spriteOrientation = obj.z_spriteOrientation;
+            z_maxTurnRate = obj.z_maxTurnRate;
+            z_spriteWidth = obj.z_spriteWidth;
+            z_spriteHeight = obj.z_spriteHeight;
+            z_spriteColor = obj.z_spriteColor;
+            z_SpriteCenter = obj.z_SpriteCenter;
+            z_removeMe = false;
+            z_moveTo = obj.z_moveTo;
+            z_spriteAlpha = obj.z_spriteAlpha;
+            z_parent = null;
+            z_children = new List<GameObject>();
+        }
+
+        //*******************************
         // Methods
         //********************************
         public virtual void Update(GameTime gameTime)
@@ -463,6 +511,13 @@ namespace SpaceCats_v2
             z_children.Add(child);
         }
 
+        public void RemoveChild(GameObject child)
+        {
+            z_children.Remove(child);
+            if (child.Parent == this)
+                child.Parent = null;
+        }
+
         public void AccelerateTo(float newSpeed, float accelTime)
         {
             z_accelerateTo = newSpeed;
@@ -470,6 +525,11 @@ namespace SpaceCats_v2
                 z_acceleration = (newSpeed - z_speed) / 1000f;
             else
                 z_acceleration = (newSpeed - z_speed) / accelTime;
+        }
+
+        virtual public GameObject Clone()
+        {
+            return new GameObject(this);
         }
 
         public virtual void Reset()
@@ -481,6 +541,9 @@ namespace SpaceCats_v2
             z_removeMe = false;
             z_visible = true;
             z_drawRotation = 0;
+            z_children.Clear();
+            z_parent = null;
+            FirstFrameToDraw = LastFrameToDraw = 0;
         }
     }
 }

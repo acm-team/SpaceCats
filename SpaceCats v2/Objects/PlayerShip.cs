@@ -27,6 +27,7 @@ namespace SpaceCats_v2
         //**************************
         // Public Properties
         //**************************
+        public const int ObjectTypeID = 2;
         public int Health
         {
             get { return z_health; }
@@ -64,6 +65,7 @@ namespace SpaceCats_v2
         public PlayerShip(Main game)
             : base(game, game.Content.Load<Texture2D>("Images\\ship1"))
         {
+            z_typeID = PlayerShip.ObjectTypeID;
             Health = 100;
             Lives = 3;
             Score = 0;
@@ -74,6 +76,17 @@ namespace SpaceCats_v2
             Layer = LayerConstants.ObjectLayer;
             Direction = -Vector2.UnitY;
             DrawRotation = VectorHelper.VectorToAngle(Direction);
+        }
+
+        public PlayerShip(PlayerShip p)
+            : base (p)
+        {
+            z_typeID = PlayerShip.ObjectTypeID;
+            z_health = p.z_health;
+            z_lives = p.z_lives;
+            z_score = p.z_score;
+            z_shotsTaken = p.z_shotsTaken;
+            z_hits = z_hits;
         }
 
         //**************************
@@ -87,6 +100,11 @@ namespace SpaceCats_v2
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
+        }
+
+        public override GameObject Clone()
+        {
+            return new PlayerShip(this);
         }
 
         public override void Reset()

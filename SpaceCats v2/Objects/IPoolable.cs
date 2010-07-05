@@ -5,7 +5,7 @@ using System.Text;
 
 namespace SpaceCats_v2
 {
-    public interface IPoolableGameObject
+    public interface IPoolable
     {
         void ReturnToPool();
     }
