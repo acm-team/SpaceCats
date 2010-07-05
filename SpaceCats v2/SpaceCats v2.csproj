@@ -102,7 +102,8 @@
     <Compile Include="Objects\Enemy.cs" />
     <Compile Include="Objects\GameControl.cs" />
     <Compile Include="Objects\GameObject.cs" />
-    <Compile Include="Objects\IPoolableGameObject.cs" />
+    <Compile Include="Objects\IPoolable.cs" />
+    <Compile Include="Objects\ObjectFactory.cs" />
     <Compile Include="Objects\PlayerShip.cs" />
     <Compile Include="Objects\StarField.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
