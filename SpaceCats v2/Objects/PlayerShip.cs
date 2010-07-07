@@ -86,7 +86,7 @@ namespace SpaceCats_v2
             z_lives = p.z_lives;
             z_score = p.z_score;
             z_shotsTaken = p.z_shotsTaken;
-            z_hits = z_hits;
+            z_hits = p.z_hits;
         }
 
         //**************************

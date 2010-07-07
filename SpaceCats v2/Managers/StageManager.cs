@@ -58,8 +58,8 @@ namespace SpaceCats_v2
             while(z_removes.Count>0)
             {
                 // if the object came from a pool, return it to its pool
-                if (z_removes.Peek() is IPoolableGameObject)
-                    ((IPoolableGameObject)z_removes.Peek()).ReturnToPool();
+                if (z_removes.Peek() is IPoolable)
+                    ((IPoolable)z_removes.Peek()).ReturnToPool();
                 // remove the object from the stage
                 z_stage.Remove(z_removes.Pop());
             }
