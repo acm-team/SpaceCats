@@ -25,12 +25,22 @@ namespace SpaceCats_v2
         private StarField z_starField;
         private bool z_isShowing;
         private PlayerShip z_bgPlayer, z_bgPlayer2;
+        private bool z_transitioning = false;
+        private int z_transitionstep;
+        private Menu z_transitionto;
+        private Menu z_transitionfrom;
+        private TimeSpan z_transitiontime;
 
         //********************************************
         // Public Properties
         //********************************************
         public bool IsShowing
         { get { return z_isShowing; } }
+        public bool IsTransitioning
+        {
+            get { return z_transitioning; }
+            set { z_transitioning = value; }
+        }
         public Menu CurrentMenu
         {
             get
@@ -84,65 +94,114 @@ namespace SpaceCats_v2
             float orbitRadius1 = 200, orbitRadius2 = 100;
             float theta1, theta2;
 
-            if (z_game.InputManager.KeyPressed(GameControls.Down) && !z_game.InputManager.IsKeyDown(GameControls.Up))
-                CurrentMenu.Select(CurrentMenu.Selected.MenuItemBelow);
-            else if (z_game.InputManager.KeyPressed(GameControls.Up) && !z_game.InputManager.IsKeyDown(GameControls.Down))
-                CurrentMenu.Select(CurrentMenu.Selected.MenuItemAbove);
-            else if (z_game.InputManager.KeyPressed(GameControls.Left) && !z_game.InputManager.IsKeyDown(GameControls.Right))
-                CurrentMenu.Select(CurrentMenu.Selected.MenuItemLeft);
-            else if (z_game.InputManager.KeyPressed(GameControls.Right) && !z_game.InputManager.IsKeyDown(GameControls.Left))
-                CurrentMenu.Select(CurrentMenu.Selected.MenuItemRight);
-            else if (z_game.InputManager.KeyPressed(GameControls.Back))
+            if (z_transitioning)
             {
-                if (z_menuStack.Count > 1)
+                if (z_transitionstep == 1)
                 {
                     CurrentMenu.Hide();
-                    CurrentMenu = null;  // this sets CurrentMenu to the previous menu
-                    CurrentMenu.Show();
+                    z_transitiontime = TimeSpan.Zero;
+                    z_transitionstep = 2;
                 }
-                else
+                else if (z_transitionstep == 2)
                 {
-                    z_game.GameStateManager.GameState = GameState.QuitGame;
+                    z_transitiontime += gameTime.ElapsedGameTime;
+
+                    //pauses inbetween menu transitions for x milliseconds
+                    if (z_transitiontime > TimeSpan.FromMilliseconds(300))
+                    {
+                        z_transitionstep = 3;
+                    }
+                }
+                else if (z_transitionstep == 3)
+                {
+                    if (!CurrentMenu.isTransitioning)
+                    {
+                        CurrentMenu = z_transitionto;
+                        z_transitionto = CurrentMenu;
+                        CurrentMenu.Show();
+                        z_transitionstep = 4;
+                    }
+                }
+                else if (z_transitionstep == 4)
+                {
+                    if (!CurrentMenu.isTransitioning)
+                    {
+                        CurrentMenu.isActive = true;
+                        z_transitionto = null;
+                        z_transitionfrom = null;
+                        z_transitioning = false;
+                        z_transitionstep = 0;
+                    }
                 }
             }
-            else if (z_game.InputManager.KeyPressed(GameControls.Enter))
+
+            //only accept user input if the current menu is active
+            if (CurrentMenu.isActive)
             {
-                if (CurrentMenuItem.Locked)
+                if (z_game.InputManager.KeyPressed(GameControls.Down) && !z_game.InputManager.IsKeyDown(GameControls.Up))
+                    CurrentMenu.Select(CurrentMenu.Selected.MenuItemBelow);
+                else if (z_game.InputManager.KeyPressed(GameControls.Up) && !z_game.InputManager.IsKeyDown(GameControls.Down))
+                    CurrentMenu.Select(CurrentMenu.Selected.MenuItemAbove);
+                else if (z_game.InputManager.KeyPressed(GameControls.Left) && !z_game.InputManager.IsKeyDown(GameControls.Right))
+                    CurrentMenu.Select(CurrentMenu.Selected.MenuItemLeft);
+                else if (z_game.InputManager.KeyPressed(GameControls.Right) && !z_game.InputManager.IsKeyDown(GameControls.Left))
+                    CurrentMenu.Select(CurrentMenu.Selected.MenuItemRight);
+                else if (z_game.InputManager.KeyPressed(GameControls.Back))
                 {
-                    CurrentMenuItem.Shake();
-                }
-                else
-                {
-                    String[] commandWords = CurrentMenuItem.Command.Split(' ');
-                    if (commandWords[0].CompareTo("GoToMenu") == 0)
+                    if (z_menuStack.Count > 1)
                     {
-                        CurrentMenu.Hide();
-                        CurrentMenu = GetMenuByTag(commandWords[1]);
-                        CurrentMenu.Show();
-                    }
-                    else if (commandWords[0].CompareTo("Back") == 0)
-                    {
-                        CurrentMenu.Hide();
-                        CurrentMenu = null; // this sets CurrentMenu to the previous menu
-                        CurrentMenu.Show();
-                    }
-                    else if (commandWords[0].CompareTo("Exit") == 0)
-                    {
-                        z_game.GameStateManager.GameState = GameState.QuitGame;
-                    }
-                    else if (commandWords[0].CompareTo("StartMission") == 0)
-                    {
-                        z_game.StartNewGame();
-                        HideNow();
-                        z_game.MissionManager.StartMission(Int32.Parse(commandWords[1]));
-                        z_game.GameStateManager.GameState = GameState.GamePlaying;
+                        TransitionTo(null);
+                        //CurrentMenu.Hide();
+                        //CurrentMenu = null;  // this sets CurrentMenu to the previous menu
+                        //CurrentMenu.Show();
                     }
                     else
                     {
+                        z_game.GameStateManager.GameState = GameState.QuitGame;
+                    }
+                }
+                else if (z_game.InputManager.KeyPressed(GameControls.Enter))
+                {
+                    if (CurrentMenuItem.Locked)
+                    {
                         CurrentMenuItem.Shake();
+                    }
+                    else
+                    {
+                        String[] commandWords = CurrentMenuItem.Command.Split(' ');
+                        if (commandWords[0].CompareTo("GoToMenu") == 0)
+                        {
+                            TransitionTo(GetMenuByTag(commandWords[1]));
+                            //CurrentMenu.Hide();
+                            //CurrentMenu = GetMenuByTag(commandWords[1]);
+                            //CurrentMenu.Show();
+                        }
+                        else if (commandWords[0].CompareTo("Back") == 0)
+                        {
+                            TransitionTo(null);
+                            //CurrentMenu.Hide();
+                            //CurrentMenu = null; // this sets CurrentMenu to the previous menu
+                            //CurrentMenu.Show();
+                        }
+                        else if (commandWords[0].CompareTo("Exit") == 0)
+                        {
+                            z_game.GameStateManager.GameState = GameState.QuitGame;
+                        }
+                        else if (commandWords[0].CompareTo("StartMission") == 0)
+                        {
+                            z_game.StartNewGame();
+                            HideNow();
+                            z_game.MissionManager.StartMission(Int32.Parse(commandWords[1]));
+                            z_game.GameStateManager.GameState = GameState.GamePlaying;
+                        }
+                        else
+                        {
+                            CurrentMenuItem.Shake();
+                        }
                     }
                 }
             }
+
             temp = z_bgPlayer.Position - CurrentMenuItem.Position;
             theta1 = VectorHelper.VectorToAngle(temp);
             if (temp.Length() > orbitRadius1 + z_bgPlayer.Speed)
@@ -173,6 +232,15 @@ namespace SpaceCats_v2
             
             foreach (Menu menu in z_menus)
                 menu.Update(gameTime);
+        }
+
+        public void TransitionTo(Menu transitiontarget)
+        {
+            z_transitioning = true;
+            z_transitionstep = 1;
+            z_transitionfrom = CurrentMenu;
+            z_transitionto = transitiontarget;
+            CurrentMenu.isActive = false;
         }
 
         public void Show()
@@ -250,7 +318,7 @@ namespace SpaceCats_v2
             // set the current menu
             CurrentMenu = z_menus[0];
             CurrentMenu.SelectByTag("Start");
-
+            CurrentMenu.isActive = true;
 
         }
        

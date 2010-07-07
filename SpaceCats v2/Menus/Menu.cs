@@ -23,7 +23,6 @@ namespace SpaceCats_v2
         private MenuObject z_selected;
         private string z_tag;
         private bool z_active;
-        private bool z_transitioning;
 
         //********************************************
         // Public Properties
@@ -57,8 +56,16 @@ namespace SpaceCats_v2
         }
         public bool isTransitioning
         {
-            get { return z_transitioning; }
-            set { z_transitioning = value; }
+            get
+            {
+                foreach (MenuObject obj in Objects)
+                {
+                    if (obj.IsTransitioning)
+                        return true;
+                }
+                //else
+                return false;
+            }
         }
 
         //********************************************
