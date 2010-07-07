@@ -76,6 +76,8 @@ namespace SpaceCats_v2
             z_game = game;
             z_objects = new List<MenuObject>();
             Tag = tag;
+
+            z_active = false;
         }
 
         //********************************************

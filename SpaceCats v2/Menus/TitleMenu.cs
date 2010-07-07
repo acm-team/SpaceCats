@@ -41,7 +41,7 @@ namespace SpaceCats_v2
         //********************************************
         public override void LoadContent()
         {
-            z_title = new MenuObject(TheGame, TheGame.Content.Load<Texture2D>("Menus\\TitleMenus\\Space Cats Logo"), new Vector2(640, 120), "");
+            z_title = new MenuObject(TheGame, TheGame.Content.Load<Texture2D>("Menus\\TitleMenus\\spacecats_wip"), new Vector2(640, 170), "");
             z_start = new MenuObject(TheGame, TheGame.Content.Load<Texture2D>("Menus\\TitleMenus\\Title_Start"), new Vector2(640, 400), "Start");
             z_options = new MenuObject(TheGame, TheGame.Content.Load<Texture2D>("Menus\\TitleMenus\\Title_Options"), new Vector2(640, 480), "Options");
             z_exit = new MenuObject(TheGame, TheGame.Content.Load<Texture2D>("Menus\\TitleMenus\\Title_Exit"), new Vector2(640, 560), "Exit");
