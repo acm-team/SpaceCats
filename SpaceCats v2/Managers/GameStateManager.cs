@@ -15,6 +15,7 @@ namespace SpaceCats_v2
 {
     public enum GameState
     {
+        SplashScreens,
         InMenuSystem,
         GamePlaying,
         GamePaused,

@@ -21,8 +21,8 @@ namespace SpaceCats_v2
         public const float ExplodLayer = 2.0f;
         public const float FloatingTextLayer = 3.0f;
         public const float ScoreLayer = 4.0f;
-        public const float AchievementLayer = 5.0f;
-        public const float DialogLayer = 6.0f;
+        public const float DialogLayer = 5.0f;
+        public const float AchievementLayer = 6.0f;
         public const float MenuLayer = 7.0f;
         public const int NumLayers = 8;
     }

@@ -222,7 +222,8 @@ namespace SpaceCats_v2
         {
             // create a starfield for the background
             z_starField = new StarField(z_game);
-            z_bgPlayer = new PlayerShip(z_game);
+            z_bgPlayer = (PlayerShip) ObjectFactory.GetObject(PlayerShip.ObjectTypeID);
+            //z_bgPlayer = new PlayerShip(z_game);
             z_bgPlayer.Position = new Vector2(0, 360);
             z_bgPlayer.Direction = Vector2.UnitX;
             z_bgPlayer.Speed = 150f / 1000f;
