@@ -18,7 +18,7 @@ namespace SpaceCats_v2
         //********************************************
         // Constants
         //********************************************
-        private const float FADE_SPEED = 0.1f;    // fade speed = 100%/1 sec = 100/1000 = 0.1
+        private const float FADE_SPEED = 0.3f;    // fade speed = 100%/1 sec = 100/1000 = 0.1
 
         //********************************************
         // Fields
@@ -108,6 +108,10 @@ namespace SpaceCats_v2
         {
             get { return z_imageObject; }
             set { z_imageObject = value; }
+        }
+        public bool IsTransitioning
+        {
+            get { return (z_isHiding && z_isUnhiding); }
         }
 
         //********************************************

@@ -1,0 +1,26 @@
+The specifics of the licensing for this software are as follows:
+
+==================================
+
+TERMS:
+- CC BY-NC-SA: This refers to the Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported license. Any part of this project licensed via the cc by-nc-sa must be attributed to 'acm-team', 'SpaceCats!', and the project website <http://spacecats.gendisc.org/>. The full text of this license is available in the CC_BY-NC-SA_LICENSE.txt file. For more information, see <http://creativecommons.org/licenses/by-nc-sa/3.0/>.
+
+- GPL: This refers to the GNU General Public License. The full text of this license is available in the GPL_LICENSE.txt file. For more information, see <http://www.gnu.org/licenses/>.
+
+==================================
+
+SPECIFIC FILE LICENSING BY FILENAME AND LOCATION:
+
+The following files:
+{
+  SpaceCats v2\Content\Images\ship1.png
+}
+are licensed under the terms of the CC BY-NC-SA (Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported) license unless otherwise specified.
+
+==================================
+
+Any other file located in the 'SpaceCats v2\Content' folder or any of its subfolders is licensed under the terms of the CC BY-NC-SA (Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported) license unless otherwise specified.
+
+==================================
+
+Any and all other files in this project, unless otherwise specified, are licensed under the terms of the GPL (GNU General Public License).

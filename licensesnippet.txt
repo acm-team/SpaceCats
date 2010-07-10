@@ -1,3 +1,5 @@
+﻿The following code snippet should be printed at the top of every source file for SpaceCats!:
+
 /* This file is part of SpaceCats!.
  * 
  * SpaceCats! is free software: you can redistribute it and/or modify
@@ -13,23 +15,3 @@
  * You should have received a copy of the GNU General Public License
  * along with SpaceCats!.  If not, see <http://www.gnu.org/licenses/>.
  */
-
-using System;
-
-namespace SpaceCats_v2
-{
-    static class Program
-    {
-        /// <summary>
-        /// The main entry point for the application.
-        /// </summary>
-        static void Main(string[] args)
-        {
-            using (Main game = new Main())
-            {
-                game.Run();
-            }
-        }
-    }
-}
-
