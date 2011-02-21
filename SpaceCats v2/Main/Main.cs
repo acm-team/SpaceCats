@@ -198,7 +198,9 @@ namespace SpaceCats_v2
             // Allows the game to exit
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
-            
+
+            movePlayer(Player1, 0.3f);
+
             base.Update(gameTime);
         }
 
@@ -257,7 +259,25 @@ namespace SpaceCats_v2
         {
             z_missionLocked[missionNum] = true;
         }
-        
-    
+
+        public void movePlayer(PlayerShip ship, float speed)
+        {
+            //create new velocity of 0
+            Vector2 velocity = new Vector2(0, 0);
+
+            //change velocity depending on keys that are currently being pressed
+            if (z_inputManager.IsKeyDown(GameControls.Up))
+                velocity.Y -= speed;
+            if (z_inputManager.IsKeyDown(GameControls.Down))
+                velocity.Y += speed;
+            if (z_inputManager.IsKeyDown(GameControls.Right))
+                velocity.X += speed;
+            if (z_inputManager.IsKeyDown(GameControls.Left))
+                velocity.X -= speed;
+
+            //update ship's velocity
+            ship.Velocity = velocity;
+        }
+
     }
 }
