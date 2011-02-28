@@ -37,6 +37,7 @@ namespace SpaceCats_v2
         private MissionManager z_missionManager;
         private InputManager z_inputManager;
         private AudioManager z_audioManager;
+        private PlayerManager z_playerManager;
         private Matrix z_scaleMatrix;
         private float z_scaleFactor, z_aspectRatio;
         private float z_offsetY;
@@ -106,6 +107,8 @@ namespace SpaceCats_v2
         { get { return z_missionManager; } }
         public InputManager InputManager
         { get { return z_inputManager; } }
+        public PlayerManager PlayerManager
+        { get { return z_playerManager; } }
         public PlayerShip Player1
         {
             get { return z_player1; }
@@ -126,6 +129,7 @@ namespace SpaceCats_v2
             z_missionManager = new MissionManager(this);
             z_inputManager = new InputManager(this);
             z_audioManager = new AudioManager(this);
+            z_playerManager = new PlayerManager(this);
             z_missionLocked = new bool[6];
 
         }
@@ -164,6 +168,7 @@ namespace SpaceCats_v2
             z_missionManager.LoadContent();
             z_menuManager.LoadContent();
             z_audioManager.LoadContent();
+//            z_playerManager.LoadContent();
             z_blackDot = Content.Load<Texture2D>("Images\\Black Dot");
 
             Player1 = new PlayerShip(this); // create this here because it loads resources
@@ -198,8 +203,6 @@ namespace SpaceCats_v2
             // Allows the game to exit
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
-
-            movePlayer(Player1, 0.3f);
 
             base.Update(gameTime);
         }
@@ -260,24 +263,6 @@ namespace SpaceCats_v2
             z_missionLocked[missionNum] = true;
         }
 
-        public void movePlayer(PlayerShip ship, float speed)
-        {
-            //create new velocity of 0
-            Vector2 velocity = new Vector2(0, 0);
-
-            //change velocity depending on keys that are currently being pressed
-            if (z_inputManager.IsKeyDown(GameControls.Up))
-                velocity.Y -= speed;
-            if (z_inputManager.IsKeyDown(GameControls.Down))
-                velocity.Y += speed;
-            if (z_inputManager.IsKeyDown(GameControls.Right))
-                velocity.X += speed;
-            if (z_inputManager.IsKeyDown(GameControls.Left))
-                velocity.X -= speed;
-
-            //update ship's velocity
-            ship.Velocity = velocity;
-        }
 
     }
 }

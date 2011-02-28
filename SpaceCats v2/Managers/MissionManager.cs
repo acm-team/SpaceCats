@@ -50,6 +50,7 @@ namespace SpaceCats_v2
                 Hide();
                 z_game.GameStateManager.GameState = GameState.InMenuSystem;
             }
+            z_game.PlayerManager.Update(gametime);
         }
 
         public void Reset()
