@@ -23,6 +23,8 @@ namespace SpaceCats_v2
         private int z_score;
         private int z_shotsTaken;
         private int z_hits;
+        private int z_xLimit;
+        private int z_yLimit;
 
         //**************************
         // Public Properties
@@ -76,6 +78,9 @@ namespace SpaceCats_v2
             Layer = LayerConstants.ObjectLayer;
             Direction = -Vector2.UnitY;
             DrawRotation = VectorHelper.VectorToAngle(Direction);
+            MaxSpeed = 0.8f;
+            z_xLimit = game.ViewPort.Width-25;
+            z_yLimit = game.ViewPort.Height-30;
         }
 
         public PlayerShip(PlayerShip p)
@@ -100,6 +105,26 @@ namespace SpaceCats_v2
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
+            if (X < 25)
+            {
+                X = 25;
+                Velocity = new Vector2(0, Velocity.Y);
+            }
+            if (X > z_xLimit)
+            {
+                X = z_xLimit;
+                Velocity = new Vector2(0, Velocity.Y);
+            }
+            if (Y < 30)
+            {
+                Y = 30;
+                Velocity = new Vector2(Velocity.X, 0);
+            }
+            if (Y > z_yLimit)
+            {
+                Y = z_yLimit;
+                Velocity = new Vector2(Velocity.X, 0);
+            }
         }
 
         public override GameObject Clone()

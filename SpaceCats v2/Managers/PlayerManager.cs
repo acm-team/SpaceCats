@@ -38,13 +38,13 @@ namespace SpaceCats_v2
         public void Update(GameTime gametime)
         {
             if (z_game.InputManager.IsKeyDown(GameControls.Up))
-                z_game.Player1.Velocity -= (Vector2.UnitY)*.1f;
+                z_game.Player1.Velocity -= (Vector2.UnitY)*.03f;
             if (z_game.InputManager.IsKeyDown(GameControls.Down))
-                z_game.Player1.Velocity += (Vector2.UnitY)*.1f;
+                z_game.Player1.Velocity += (Vector2.UnitY)*.03f;
             if (z_game.InputManager.IsKeyDown(GameControls.Right))
-                z_game.Player1.Velocity += (Vector2.UnitX)*.1f;
+                z_game.Player1.Velocity += (Vector2.UnitX)*.03f;
             if (z_game.InputManager.IsKeyDown(GameControls.Left))
-                z_game.Player1.Velocity -= (Vector2.UnitX)*.1f;
+                z_game.Player1.Velocity -= (Vector2.UnitX)*.03f;
         }
 
         public void Reset()

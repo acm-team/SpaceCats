@@ -98,13 +98,18 @@ namespace SpaceCats_v2
                 // do not normalize if the length is zero, results are undefined
                 if (value.Length()!=0)
                     z_direction.Normalize();
-                z_speed = value.Length();
+                this.Speed = value.Length();
             }
         }
         public float Speed
         {
             get { return z_speed; }
-            set { z_speed = value; }
+            set
+            {
+                if (value <= z_maxSpeed)
+                    z_speed = value;
+                else z_speed = z_maxSpeed;
+            }
         }
         public float MaxSpeed
         {
@@ -377,6 +382,7 @@ namespace SpaceCats_v2
             z_position = Vector2.Zero;
             z_direction = Vector2.Zero;
             z_speed = 0.0f;
+            z_maxSpeed = 1000;
             z_removeMe = false;
             z_spriteColor = Color.White;
             z_spriteAlpha = 100.0f;
