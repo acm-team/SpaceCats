@@ -105,12 +105,14 @@ namespace SpaceCats_v2
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
+
+            //check for boundaries
             if (X < 25)
             {
                 X = 25;
                 Velocity = new Vector2(0, Velocity.Y);
             }
-            if (X > z_xLimit)
+            else if (X > z_xLimit)
             {
                 X = z_xLimit;
                 Velocity = new Vector2(0, Velocity.Y);
@@ -120,11 +122,30 @@ namespace SpaceCats_v2
                 Y = 30;
                 Velocity = new Vector2(Velocity.X, 0);
             }
-            if (Y > z_yLimit)
+            else if (Y > z_yLimit)
             {
                 Y = z_yLimit;
                 Velocity = new Vector2(Velocity.X, 0);
             }
+
+            //apply decceleration
+            float xVelocity = Velocity.X;
+            float yVelocity = Velocity.Y;
+
+            if (xVelocity > 0.01f)
+                xVelocity -= 0.01f;
+            else if (xVelocity < 0.01f)
+                xVelocity += 0.01f;
+            else
+                xVelocity = 0f;
+            if (yVelocity > 0.01f)
+                yVelocity -= 0.01f;
+            else if (yVelocity < 0.01f)
+                yVelocity += 0.01f;
+            else
+                yVelocity = 0f;
+
+            Velocity = new Vector2(xVelocity, yVelocity);
         }
 
         public override GameObject Clone()
