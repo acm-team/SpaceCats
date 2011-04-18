@@ -163,6 +163,7 @@ namespace SpaceCats_v2
             ObjectFactory.Initialize();
             ObjectFactory.AddObjectType(GameObject.ObjectTypeID, new GameObject(this, Content.Load<Texture2D>("Images\\ship1")), true, 10);
             ObjectFactory.AddObjectType(PlayerShip.ObjectTypeID, new PlayerShip(this), true, 5);
+            ObjectFactory.AddObjectType(Asteroid.ObjectTypeID, new Asteroid(this), true, 10);
             z_gameStateManager.LoadContent();
             z_stageManager.LoadContent();
             z_missionManager.LoadContent();
