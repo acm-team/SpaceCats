@@ -134,13 +134,13 @@ namespace SpaceCats_v2
 
             if (xVelocity > 0.01f)
                 xVelocity -= 0.01f;
-            else if (xVelocity < 0.01f)
+            else if (xVelocity < -0.01f)
                 xVelocity += 0.01f;
             else
                 xVelocity = 0f;
             if (yVelocity > 0.01f)
                 yVelocity -= 0.01f;
-            else if (yVelocity < 0.01f)
+            else if (yVelocity < -0.01f)
                 yVelocity += 0.01f;
             else
                 yVelocity = 0f;
