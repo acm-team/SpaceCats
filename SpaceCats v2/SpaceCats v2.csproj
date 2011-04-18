@@ -99,6 +99,7 @@
     <Compile Include="Menus\MenuObject.cs" />
     <Compile Include="Menus\MissionMenu.cs" />
     <Compile Include="Menus\TitleMenu.cs" />
+    <Compile Include="Objects\Asteroid.cs" />
     <Compile Include="Objects\Enemy.cs" />
     <Compile Include="Objects\GameControl.cs" />
     <Compile Include="Objects\GameObject.cs" />
