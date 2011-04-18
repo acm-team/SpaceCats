@@ -32,6 +32,12 @@ namespace SpaceCats_v2
                     z_health = value; 
             }
         }
+
+        public Enemy(Main game, Texture2D sprite)
+            : base(game, sprite) { }
+
+        public Enemy(Enemy enemy)
+            : base(enemy) { }
             
     }
 }
