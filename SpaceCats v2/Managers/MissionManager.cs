@@ -71,6 +71,7 @@ namespace SpaceCats_v2
                 case 1:
                     //z_game.AudioManager.Play(SongList.Mission1);
                     z_game.StageManager.AddObject(new StarField(z_game));
+                    z_game.StageManager.AddObject(new Asteroid(z_game));
                     break;
                 case 2:
                     //z_game.AudioManager.Play(SongList.Mission2);
